@@ -112,9 +112,9 @@ const SignUp = async (req, res, next) => {
       });
     }
 
-    if (!validateEmail(email)) {
-      return next({ msg: "Please enter valid email", code: 400 });
-    }
+    // if (!validateEmail(email)) {
+    //   return next({ msg: "Please enter valid email", code: 400 });
+    // }
 
     const checkUserExists = await User.findOne({
       where: {
