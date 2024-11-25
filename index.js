@@ -3,29 +3,46 @@ dotenv.config();
 const express = require("express");
 const errorMiddleware = require("./middleware/error-middleware");
 const app = express();
-const http = require("http");
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 // const dbConnection = require("./db/conn");
 const port = process.env.PORT || 8000;
 const authroute = require("./route/auth-route");
 const userroute = require("./route/user-route");
+const postroute = require("./route/post-route");
 const sequelize = require("./db/sqconn");
-const User = require("./db/Models/User");
+// const User = require("./db/Models/User");
 
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/api/auth", authroute);
 app.use("/api/user", userroute);
+app.use("/api/post", postroute);
 app.use(errorMiddleware);
 
-app.get("/", (req, res) => {
-  return res.sendFile(__dirname + "/public/index.html");
-});
+
+sequelize
+  .authenticate()
+  .then(async () => {
+    // await sequelize.sync({force: true})
+    console.log("Connected to database successfully");
+    app.listen(port, () => {
+      console.log(`Server Listening at port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log("Failed to connect to database", err);
+  });
+
+  
+// const http = require("http");
+// const server = http.createServer(app);
+// const { Server } = require("socket.io");
+// const
+// app.get("/", (req, res) => {
+//   return res.sendFile(__dirname + "/public/index.html");
+// });
 
 //Testing random route for sequelize
 // app.post("/testuser", async(req,res)=>{
@@ -49,39 +66,24 @@ app.get("/", (req, res) => {
 //    }
 // })
 
-io.on("connection", (socket) => {
-  console.log("User connected with user id", socket.id);
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-  socket.on("chat message", (msg) => {
-    console.log(msg);
-    io.emit("chat message", msg);
-  });
+// io.on("connection", (socket) => {
+//   console.log("User connected with user id", socket.id);
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected");
+//   });
+//   socket.on("chat message", (msg) => {
+//     console.log(msg);
+//     io.emit("chat message", msg);
+//   });
 
-  socket.on("isTyping", (msg)=>{
+//   socket.on("isTyping", (msg) => {
+//     console.log(msg);
+//   });
+// });
 
-    console.log(msg)
-  })
-});
-
-io.on("chat message", (socket) => {
-  console.log(socket);
-});
-
-sequelize
-  .authenticate()
-  .then(async() => {
-    // await sequelize.sync({ force: true });
-    console.log("Connected to database successfully");
-    server.listen(port, () => {
-      console.log(`Server Listening at port ${port}`);
-    });
-  })
-  .catch((err) => {
-    console.log("Failed to connect to database", err);
-  });
-
+// io.on("chat message", (socket) => {
+//   console.log(socket);
+// });
 // dbConnection()
 //   .then(() => {
 //     server.listen(port, () => {

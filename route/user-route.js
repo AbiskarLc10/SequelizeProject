@@ -6,7 +6,7 @@ const controller = require("../controllers/user-controller");
 router.route("/update-user/:userId").patch(verifyUser, controller.updateUser);
 router.route("/delete-user/:userId").delete(verifyUser,controller.deleteUser);
 router.route("/signout/:userId").delete(verifyUser,controller.signOutUser);
-router.route("/getuser/:userId").get(controller.getUserData);
+router.route("/getuser/:userId").get(verifyUser,controller.getUserData);
 
 
 module.exports = router;
