@@ -5,13 +5,11 @@ const errorMiddleware = require("./middleware/error-middleware");
 const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-// const dbConnection = require("./db/conn");
 const port = process.env.PORT || 8000;
 const authroute = require("./route/auth-route");
 const userroute = require("./route/user-route");
 const postroute = require("./route/post-route");
 const sequelize = require("./db/sqconn");
-// const User = require("./db/Models/User");
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -25,7 +23,7 @@ app.use(errorMiddleware);
 sequelize
   .authenticate()
   .then(async () => {
-    // await sequelize.sync({force: true})
+    await sequelize.sync()
     console.log("Connected to database successfully");
     app.listen(port, () => {
       console.log(`Server Listening at port ${port}`);

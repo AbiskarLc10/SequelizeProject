@@ -17,6 +17,8 @@ const Post =  sequelize.define('Post',{
         type: DataTypes.STRING,
         allowNull: false
     }
+},{
+    timestamps: true
 })
 
 module.exports = Post;
