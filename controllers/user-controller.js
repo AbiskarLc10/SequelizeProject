@@ -1,15 +1,25 @@
-const dbConnection = require("../db/conn");
 const { validateEmail } = require("../validation/regex");
 const bcrypt = require("bcryptjs");
 const { User } = require("../db/Models");
+const { verifyPassword } = require("../lib/methods");
 
 const updateUser = async (req, res, next) => {
   const { userId } = req.params;
-  const { username, email, password, profileImage } = req.body;
+  const { username, email, password, newpassword, profileImage } = req.body;
   const { id } = req.user;
 
   if (userId !== id) {
     return next({ msg: "Unauthorized user", code: 403 });
+  }
+  const findUserById = await User.findOne({
+    where: {
+      id: id,
+    },
+  });
+  const checkOldPass = await verifyPassword(password, findUserById.password);
+
+  if (!checkOldPass) {
+    return next({ msg: "Your old password mismatched", code: 403 });
   }
   const dataToUpdate = {};
   if (username) {
@@ -24,7 +34,7 @@ const updateUser = async (req, res, next) => {
   }
 
   if (password) {
-    const hashedPass = await bcrypt.hash(password, 10);
+    const hashedPass = await bcrypt.hash(newpassword, 10);
 
     dataToUpdate.password = hashedPass;
   }

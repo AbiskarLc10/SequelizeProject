@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const ShortUniqueId = require("short-unique-id");
 const sequelize = require("../db/sqconn");
 const { User } = require("../db/Models");
+const { hashPassword, verifyPassword, generateToken } = require("../lib/methods");
 
 //created using raw mysql query
 // const SignUp = async (req, res, next) => {
@@ -104,18 +105,12 @@ const { User } = require("../db/Models");
 //Using sequelize
 const SignUp = async (req, res, next) => {
   try {
-    await sequelize.sync();
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
       return res.status(400).json({
         message: "Please provide all fields username, email and password",
       });
     }
-
-    // if (!validateEmail(email)) {
-    //   return next({ msg: "Please enter valid email", code: 400 });
-    // }
-
     const checkUserExists = await User.findOne({
       where: {
         email: email,
@@ -175,7 +170,7 @@ const SignIn = async (req,res,next) => {
       return next({ msg: "Please sign up first before login", code: 404 });
     }
 
-    const checkPassword = await bcrypt.compare(password,userData.password)
+    const checkPassword = await verifyPassword(password,userData.password);
 
     if(!checkPassword){
       return next({msg:"Invalid Credentials",code:401})
@@ -183,10 +178,7 @@ const SignIn = async (req,res,next) => {
 
     const {password:pass, ...rest} = userData.dataValues
 
-    const token =  jwt.sign({
-      id: userData.dataValues.id,
-      email: userData.dataValues.email
-    },process.env.PRIVATEKEY)
+    const token = await generateToken(userData.dataValues.id,userData.dataValues.email)
 
     console.log(token)
     return res.status(200).cookie('token',token).json({messsage:"Sign In successful",success: true, data:rest})
