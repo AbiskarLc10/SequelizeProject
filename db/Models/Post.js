@@ -1,13 +1,13 @@
 const { DataTypes} = require('sequelize')
 const sequelize = require('../sqconn')
-
+const { v4: uuidv4 } = require("uuid");
 
 const Post =  sequelize.define('Post',{
     id: {
-        type: DataTypes.UUID,
+        type: DataTypes.CHAR(36),
         primaryKey: true,
-        allowNull:false,
-        defaultValue: DataTypes.UUIDV4
+        allowNull: false,
+        defaultValue: uuidv4
     },
     title: {
         type: DataTypes.STRING,
