@@ -1,6 +1,6 @@
 const { validateEmail } = require("../validation/regex");
 const bcrypt = require("bcryptjs");
-const { User } = require("../db/Models");
+const { User, Post } = require("../db/Models");
 const { verifyPassword } = require("../lib/methods");
 
 const updateUser = async (req, res, next) => {
@@ -115,15 +115,28 @@ const getUserData = async (req, res, next) => {
       return next({ msg: "Unauthorized User", code: 403 });
     }
 
-    const user = await User.findOne({
+    // const user = await User.findOne({
+    //   where: {
+    //     id: userId,
+    //   },
+    //   attributes: {
+    //     exclude: ["password"],
+    //   },
+    // });
+    const userData = await User.findAll({
       where: {
-        id: userId,
+        id: id
+      },
+      include: {
+        model: Post,
+        as: 'posts'
       },
       attributes: {
-        exclude: ["password"],
-      },
-    });
-    return res.status(200).json({ user: user.dataValues });
+        exclude: ['password']
+      }
+    })
+    // return res.status(200).json({ user: user.dataValues });
+    return res.status(200).json({ user: userData });
   } catch (error) {
     console.log(error);
     return next({ msg: "Failed to get user data" });
