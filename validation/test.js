@@ -1,20 +1,20 @@
-class faculty{
+// class faculty{
 
-    constructor(faculty_name){
-        this.faculty = faculty_name
-    }
+//     constructor(faculty_name){
+//         this.faculty = faculty_name
+//     }
 
-    setCollege(college){
-            this.college = college
-    }
+//     setCollege(college){
+//             this.college = college
+//     }
 
-    getFacultyDetails(){
-        return `The name of College is ${this.college} and the faculty is ${this.faculty}`
-    }
-}
+//     getFacultyDetails(){
+//         return `The name of College is ${this.college} and the faculty is ${this.faculty}`
+//     }
+// }
 
-const cli = new faculty("BCA")
-console.log(cli)
+// const cli = new faculty("BCA")
+// console.log(cli)
 // class User extends faculty{
 
 //     constructor(user_id,faculty_name){
