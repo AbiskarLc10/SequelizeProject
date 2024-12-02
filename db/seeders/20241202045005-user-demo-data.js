@@ -1,22 +1,11 @@
 'use strict';
-const bcrypt = require('bcryptjs')
-const { v4: uuidv4 } = require("uuid");
+const bcrypt = require('bcryptjs');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-
     await queryInterface.bulkInsert("Users", [
       {
-        id: uuidv4(),
+        id: 'd0e1f6da-bc11-48c8-92b4-1a9b7b4f07be',  
         firstName: 'John',
         lastName: 'Doe',
         email: 'john.doe@example.com',
@@ -26,7 +15,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: '42d11b8b-74d9-4a98-9b88-ff72692449be',  
         firstName: 'Jane',
         lastName: 'Smith',
         email: 'jane.smith@example.com',
@@ -36,7 +25,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: '51e5db6c-9b51-459b-85d2-c7db37eb477f',  
         firstName: 'Alice',
         lastName: 'Johnson',
         email: 'alice.johnson@example.com',
@@ -46,7 +35,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: 'e1c6f7ac-c522-4723-885d-0bb3d51a4797',  
         firstName: 'Bob',
         lastName: 'Brown',
         email: 'bob.brown@example.com',
@@ -56,7 +45,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: '3a746e7b-82f1-40f3-98e2-5adf91a199fe',  
         firstName: 'Charlie',
         lastName: 'Davis',
         email: 'charlie.davis@example.com',
@@ -69,11 +58,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("Users", null, {});
   }
 };
