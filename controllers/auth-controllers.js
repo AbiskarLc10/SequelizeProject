@@ -105,10 +105,10 @@ const { hashPassword, verifyPassword, generateToken } = require("../lib/methods"
 //Using sequelize
 const SignUp = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
+    const { firstName,lastName, email, password } = req.body;
+    if (!firstName || !lastName || !email || !password) {
       return res.status(400).json({
-        message: "Please provide all fields username, email and password",
+        message: "Please provide all fields firstName,lastName, email and password",
       });
     }
     const checkUserExists = await User.findOne({
@@ -123,7 +123,8 @@ const SignUp = async (req, res, next) => {
     const hashPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      username: username,
+      firstName: firstName,
+      lastName: lastName,
       email: email,
       password: hashPassword,
     });

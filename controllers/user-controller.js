@@ -5,7 +5,8 @@ const { verifyPassword } = require("../lib/methods");
 
 const updateUser = async (req, res, next) => {
   const { userId } = req.params;
-  const { username, email, password, newpassword, profileImage } = req.body;
+  const { firstName, lastName, email, password, newpassword, profileImage } =
+    req.body;
   const { id } = req.user;
 
   if (userId !== id) {
@@ -16,14 +17,18 @@ const updateUser = async (req, res, next) => {
       id: id,
     },
   });
+
   const checkOldPass = await verifyPassword(password, findUserById.password);
 
   if (!checkOldPass) {
     return next({ msg: "Your old password mismatched", code: 403 });
   }
   const dataToUpdate = {};
-  if (username) {
-    dataToUpdate.username = username;
+  if (firstName) {
+    dataToUpdate.firstName = firstName;
+  }
+  if (lastName) {
+    dataToUpdate.lastName = lastName;
   }
 
   if (email) {
@@ -33,7 +38,7 @@ const updateUser = async (req, res, next) => {
     dataToUpdate.email = email;
   }
 
-  if (password) {
+  if (newpassword) {
     const hashedPass = await bcrypt.hash(newpassword, 10);
 
     dataToUpdate.password = hashedPass;
@@ -95,7 +100,6 @@ const signOutUser = async (req, res, next) => {
     if (id !== userId) {
       return next({ msg: "Unauthorized User", code: 403 });
     }
-
     return res
       .clearCookie("token")
       .status(200)
@@ -125,16 +129,16 @@ const getUserData = async (req, res, next) => {
     // });
     const userData = await User.findAll({
       where: {
-        id: id
+        id: id,
       },
       include: {
         model: Post,
-        as: 'posts'
+        as: "posts",
       },
       attributes: {
-        exclude: ['password']
-      }
-    })
+        exclude: ["password"],
+      },
+    });
     // return res.status(200).json({ user: user.dataValues });
     return res.status(200).json({ user: userData });
   } catch (error) {
