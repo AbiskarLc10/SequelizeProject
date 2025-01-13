@@ -28,11 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       password: { type: DataTypes.STRING, allowNull: false },
       profileImage: {
         type: DataTypes.STRING,
+        defaultValue: new Date()
       }
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: "Author",
       timestamps: true 
     }
   );

@@ -14,7 +14,7 @@ module.exports = {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
       allowNull:false
-    })
+    });
   },
 
   async down (queryInterface, Sequelize) {
@@ -25,6 +25,6 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
 
-    await queryInterface.removeColumn("Users","isAdmin")
+    await queryInterface.removeColumn("Users","isAdmin");
   }
 };

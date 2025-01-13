@@ -174,19 +174,19 @@ const SignIn = async (req,res,next) => {
     const checkPassword = await verifyPassword(password,userData.password);
 
     if(!checkPassword){
-      return next({msg:"Invalid Credentials",code:401})
+      return next({msg:"Invalid Credentials",code:401});
     }
 
-    const {password:pass, ...rest} = userData.dataValues
+    const {password:pass, ...rest} = userData.dataValues;
 
-    const token = await generateToken(userData.dataValues.id,userData.dataValues.email)
+    const token = await generateToken(userData.dataValues.id,userData.dataValues.email);
 
-    console.log(token)
-    return res.status(200).cookie('token',token).json({messsage:"Sign In successful",success: true, data:rest})
+    console.log(token);
+    return res.status(200).cookie('token',token).json({messsage:"Sign In successful",success: true, data:rest});
 
   } catch (error) {
-    console.log(error)
-    return next({msg:"Failed to sign in user",code:500})
+    console.log(error);
+    return next({msg:"Failed to sign in user",code:500});
   }
 };
 

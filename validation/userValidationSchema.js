@@ -6,7 +6,7 @@ const signUpSchema = z.object({
     lastName: z.string().min(3,"Last Name must have at least 3 characters"),
     email: z.string().email("Not a valid email address"),
     password: z.string().min(6,"Password must have at least 6 characters")
-})
+});
 
 
 const updateUserSchema = z.object({
@@ -15,10 +15,10 @@ const updateUserSchema = z.object({
     email: z.string().email("Not a valid email address").optional(),
     password: z.string().min(6,"Password must have at least 6 characters").optional(),
     profileImage: z.string().optional()
-})
+});
 
 
 module.exports = {
     signUpSchema,
     updateUserSchema
-}
+};

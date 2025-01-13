@@ -11,18 +11,18 @@ const dbConnection = async () =>{
               user: "root",
               password: "password",
               database: "mydatabase",
-        })
+        });
 
         if(connection){
-            console.log("Connected to database successfully")
-            return connection
+            console.log("Connected to database successfully");
+            return connection;
         }
     } catch (error) {
         
-       console.log(error)
-       throw new Error("Failed to connect to database")
+       console.log(error);
+       throw new Error("Failed to connect to database");
     }
-}
+};
 
 
-module.exports = dbConnection
+module.exports = dbConnection;

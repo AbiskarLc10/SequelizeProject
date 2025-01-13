@@ -10,7 +10,7 @@ const authroute = require("./route/auth-route");
 const userroute = require("./route/user-route");
 const postroute = require("./route/post-route");
 const sequelize = require("./db/sqconn");
-const { QueryTypes } = require("sequelize");
+const logger = require("./lib/logger");
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -19,31 +19,39 @@ app.use("/api/auth", authroute);
 app.use("/api/user", userroute);
 app.use("/api/post", postroute);
 
-app.get("/", async (req,res,next)=>{
-
+app.get("/", async (req, res, next) => {
   const data = {
     id: "3d8b8fbd-93d9-4c16-b937-59f974f4c47d",
     firstName: "Aman11",
     lastName: "Hellooo11",
     email: "aman12345@gmail.com",
     password: "$2a$10$OuoIxG1pa79RXfxUe.AZZewQ1Va3FJUEqCxEmcxWs5JWAO5ekuzcC",
-  }
-  
-  try {
+  };
 
-    const response = await sequelize.query('INSERT INTO users SET id= :id,firstName= :firstName,lastName= :lastName,email= :email,password= :password,createdAt= :create,updatedAt= :update',{
-      replacements: {...data,create: new Date(),update: new Date()},
-      type: QueryTypes.INSERT
-    });
+  // const data1 = Object.keys(data).map(()=>{
+  //   console.log("hello");
+  // })
+  logger.log("info", data.id);
 
-    if(response[1]){
-      return res.status(200).json({message:"Inserted successfully", success:true});
-    }
-  } catch (error) {
-    console.log(error)
-    return res.status(500).json({message:error.message})
-  }
-})
+ 
+  return res.status(200).json(data);
+  // try {
+
+  // const response = await sequelize.query('INSERT INTO users SET id= :id,firstName= :firstName,lastName= :lastName,email= :email,password= :password,createdAt= :create,updatedAt= :update',{
+  //   replacements: {...data,create: new Date(),update: new Date()},
+  //   type: QueryTypes.INSERT
+  // });
+
+  // if(response[1]){
+  //   return res.status(200).json({message:"Inserted successfully", success:true});
+  // }
+  // } catch (error) {
+  //   console.log(error)
+  //   return res.status(500).json({message:error.message})
+  // }
+
+  // return res.status(200).json(data);
+});
 app.use(errorMiddleware);
 
 sequelize
