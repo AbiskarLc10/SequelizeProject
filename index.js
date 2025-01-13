@@ -11,6 +11,7 @@ const userroute = require("./route/user-route");
 const postroute = require("./route/post-route");
 const sequelize = require("./db/sqconn");
 const logger = require("./lib/logger");
+const { QueryTypes } = require("sequelize");
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -28,13 +29,6 @@ app.get("/", async (req, res, next) => {
     password: "$2a$10$OuoIxG1pa79RXfxUe.AZZewQ1Va3FJUEqCxEmcxWs5JWAO5ekuzcC",
   };
 
-  // const data1 = Object.keys(data).map(()=>{
-  //   console.log("hello");
-  // })
-  logger.log("info", data.id);
-
- 
-  return res.status(200).json(data);
   // try {
 
   // const response = await sequelize.query('INSERT INTO users SET id= :id,firstName= :firstName,lastName= :lastName,email= :email,password= :password,createdAt= :create,updatedAt= :update',{
@@ -47,13 +41,16 @@ app.get("/", async (req, res, next) => {
   // }
   // } catch (error) {
   //   console.log(error)
+  //   logger.log("error",error.message)
   //   return res.status(500).json({message:error.message})
   // }
 
-  // return res.status(200).json(data);
+  return res.status(200).json(data);
 });
 app.use(errorMiddleware);
 
+
+// process.on("un")
 sequelize
   .authenticate()
   .then(async () => {

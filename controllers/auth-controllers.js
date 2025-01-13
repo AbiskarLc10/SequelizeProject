@@ -2,11 +2,98 @@ const dbConnection = require("../db/conn");
 const bcrypt = require("bcryptjs");
 const { validateEmail } = require("../validation/regex");
 const jwt = require("jsonwebtoken");
-const ShortUniqueId = require("short-unique-id");
 const sequelize = require("../db/sqconn");
-const { User } = require("../db/Models");
+const { User } = require("../db/Models/index");
 const { hashPassword, verifyPassword, generateToken } = require("../lib/methods");
 
+
+//Using sequelize
+const SignUp = async (req, res, next) => {
+  try {
+    const { firstName,lastName, email, password } = req.body;
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({
+        message: "Please provide all fields firstName,lastName, email and password",
+      });
+    }
+    const checkUserExists = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (checkUserExists) {
+      return next({ msg: "User already exist", code: 400 });
+    }
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: hashPassword,
+    });
+
+    if (!user) {
+      return next({ msg: "Failed to create user", code: 500 });
+    }
+
+    console.log(user);
+
+    return res
+      .status(201)
+      .json({ message: "User created successfully", success: true });
+  } catch (error) {
+    console.log(error);
+    return next({ msg: error.message, code: 500 });
+  }
+};
+
+const SignIn = async (req,res,next) => {
+  try {
+    await sequelize.sync();
+
+    
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return next({ msg: "Please provide your credentials", code: 404 });
+    }
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({
+        message: "Please provide all fields username, email and password",
+      });
+    }
+
+    const userData = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!userData) {
+      return next({ msg: "Please sign up first before login", code: 404 });
+    }
+
+    const checkPassword = await verifyPassword(password,userData.password);
+
+    if(!checkPassword){
+      return next({msg:"Invalid Credentials",code:401});
+    }
+
+    const {password:pass, ...rest} = userData.dataValues;
+
+    const token = await generateToken(userData.dataValues.id,userData.dataValues.email);
+
+    console.log(token);
+    return res.status(200).cookie('token',token).json({messsage:"Sign In successful",success: true, data:rest});
+
+  } catch (error) {
+    console.log(error);
+    return next({msg:"Failed to sign in user",code:500});
+  }
+};
 //created using raw mysql query
 // const SignUp = async (req, res, next) => {
 //   const conn = await dbConnection();
@@ -101,94 +188,6 @@ const { hashPassword, verifyPassword, generateToken } = require("../lib/methods"
 //     throw new Error("Failed to signin the user");
 //   }
 // };
-
-//Using sequelize
-const SignUp = async (req, res, next) => {
-  try {
-    const { firstName,lastName, email, password } = req.body;
-    if (!firstName || !lastName || !email || !password) {
-      return res.status(400).json({
-        message: "Please provide all fields firstName,lastName, email and password",
-      });
-    }
-    const checkUserExists = await User.findOne({
-      where: {
-        email: email,
-      },
-    });
-
-    if (checkUserExists) {
-      return next({ msg: "User already exist", code: 400 });
-    }
-    const hashPassword = await bcrypt.hash(password, 10);
-
-    const user = await User.create({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: hashPassword,
-    });
-
-    if (!user) {
-      return next({ msg: "Failed to create user", code: 500 });
-    }
-
-    console.log(user);
-
-    return res
-      .status(201)
-      .json({ message: "User created successfully", success: true });
-  } catch (error) {
-    console.log(error);
-    return next({ msg: error.message, code: 500 });
-  }
-};
-
-const SignIn = async (req,res,next) => {
-  try {
-    await sequelize.sync();
-
-    
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return next({ msg: "Please provide your credentials", code: 404 });
-    }
-
-    if (!validateEmail(email)) {
-      return res.status(400).json({
-        message: "Please provide all fields username, email and password",
-      });
-    }
-
-    const userData = await User.findOne({
-      where: {
-        email: email,
-      },
-    });
-
-    if (!userData) {
-      return next({ msg: "Please sign up first before login", code: 404 });
-    }
-
-    const checkPassword = await verifyPassword(password,userData.password);
-
-    if(!checkPassword){
-      return next({msg:"Invalid Credentials",code:401});
-    }
-
-    const {password:pass, ...rest} = userData.dataValues;
-
-    const token = await generateToken(userData.dataValues.id,userData.dataValues.email);
-
-    console.log(token);
-    return res.status(200).cookie('token',token).json({messsage:"Sign In successful",success: true, data:rest});
-
-  } catch (error) {
-    console.log(error);
-    return next({msg:"Failed to sign in user",code:500});
-  }
-};
 
 module.exports = {
   SignUp,

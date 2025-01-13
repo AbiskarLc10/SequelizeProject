@@ -1,5 +1,5 @@
 "use strict";
-const {  Model } = require("sequelize"); 
+const { Model } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 
 module.exports = (sequelize, DataTypes) => {
@@ -28,13 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       password: { type: DataTypes.STRING, allowNull: false },
       profileImage: {
         type: DataTypes.STRING,
-        defaultValue: new Date()
-      }
+      },
     },
     {
       sequelize,
-      modelName: "Author",
-      timestamps: true 
+      modelName: "User",
+      timestamps: true,
     }
   );
 
