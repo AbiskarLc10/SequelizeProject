@@ -1,0 +1,68 @@
+
+services:
+  mysqldb:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=newdb
+      - MYSQL_ROOT_PASSWORD=password
+    networks:
+      - my-net
+    container_name: mysqldb
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    
+    
+
+  sequelizeapp:
+    build: .
+    container_name: sequelizeapp
+    environment:
+      - PRIVATEKEY=ABISKARLAMICHHANE
+    networks:
+      - my-net
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    stdin_open: true  
+    tty: true        
+
+networks:
+  my-net:
+    external: true  
+ 
+ 
+
+# version: "3.9"
+# services:
+#   mysqldb:
+#     image: mysql:latest
+#     environment:
+#       MYSQL_DATABASE: newdb
+#       MYSQL_ROOT_PASSWORD: password
+#     networks:
+#       - sqlapp
+#     container_name: mysqldb
+#     healthcheck:
+#       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+#       interval: 10s
+#       timeout: 20s
+#       retries: 10
+
+#   sequelizeapp:
+#     build: . 
+#     container_name: sequelizewithnode
+#     networks:
+#       - sqlapp
+#     depends_on:
+#       mysqldb:
+#         condition: service_healthy
+#     ports: 
+#       - "8000:8000"
+
+# networks:
+#   sqlapp:
+#     driver: bridge
