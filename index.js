@@ -20,37 +20,35 @@ app.use("/api/auth", authroute);
 app.use("/api/user", userroute);
 app.use("/api/post", postroute);
 
-app.get("/", async (req, res, next) => {
-  const data = {
-    id: "3d8b8fbd-93d9-4c16-b937-59f974f4c47d",
-    firstName: "Aman11",
-    lastName: "Hellooo11",
-    email: "aman12345@gmail.com",
-    password: "$2a$10$OuoIxG1pa79RXfxUe.AZZewQ1Va3FJUEqCxEmcxWs5JWAO5ekuzcC",
-  };
+// app.get("/", async (req, res, next) => {
+//   const data = {
+//     id: "3d8b8fbd-93d9-4c16-b937-59f974f4c47d",
+//     firstName: "Aman11",
+//     lastName: "Hellooo11",
+//     email: "aman12345@gmail.com",
+//     password: "$2a$10$OuoIxG1pa79RXfxUe.AZZewQ1Va3FJUEqCxEmcxWs5JWAO5ekuzcC",
+//   };
 
-  // try {
+//   // try {
 
-  // const response = await sequelize.query('INSERT INTO users SET id= :id,firstName= :firstName,lastName= :lastName,email= :email,password= :password,createdAt= :create,updatedAt= :update',{
-  //   replacements: {...data,create: new Date(),update: new Date()},
-  //   type: QueryTypes.INSERT
-  // });
+//   // const response = await sequelize.query('INSERT INTO users SET id= :id,firstName= :firstName,lastName= :lastName,email= :email,password= :password,createdAt= :create,updatedAt= :update',{
+//   //   replacements: {...data,create: new Date(),update: new Date()},
+//   //   type: QueryTypes.INSERT
+//   // });
 
-  // if(response[1]){
-  //   return res.status(200).json({message:"Inserted successfully", success:true});
-  // }
-  // } catch (error) {
-  //   console.log(error)
-  //   logger.log("error",error.message)
-  //   return res.status(500).json({message:error.message})
-  // }
+//   // if(response[1]){
+//   //   return res.status(200).json({message:"Inserted successfully", success:true});
+//   // }
+//   // } catch (error) {
+//   //   console.log(error)
+//   //   logger.log("error",error.message)
+//   //   return res.status(500).json({message:error.message})
+//   // }
 
-  return res.status(200).json(data);
-});
+//   return res.status(200).json(data);
+// });
 app.use(errorMiddleware);
 
-
-// process.on("un")
 sequelize
   .authenticate()
   .then(async () => {

@@ -2,7 +2,7 @@
 module.exports = [
   {
     rules: {
-      semi: "error",
+     "semi": "error",
       "prefer-const": "error",
       "array-callback-return": "error",
       "curly": ["error", "all"],

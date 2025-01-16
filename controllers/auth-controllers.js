@@ -4,16 +4,19 @@ const { validateEmail } = require("../validation/regex");
 const jwt = require("jsonwebtoken");
 const sequelize = require("../db/sqconn");
 const { User } = require("../db/Models/index");
-const { hashPassword, verifyPassword, generateToken } = require("../lib/methods");
-
+const {
+  verifyPassword,
+  generateToken,
+} = require("../lib/methods");
 
 //Using sequelize
 const SignUp = async (req, res, next) => {
   try {
-    const { firstName,lastName, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     if (!firstName || !lastName || !email || !password) {
       return res.status(400).json({
-        message: "Please provide all fields firstName,lastName, email and password",
+        message:
+          "Please provide all fields firstName,lastName, email and password",
       });
     }
     const checkUserExists = await User.findOne({
@@ -49,11 +52,10 @@ const SignUp = async (req, res, next) => {
   }
 };
 
-const SignIn = async (req,res,next) => {
+const SignIn = async (req, res, next) => {
   try {
     await sequelize.sync();
 
-    
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -76,22 +78,27 @@ const SignIn = async (req,res,next) => {
       return next({ msg: "Please sign up first before login", code: 404 });
     }
 
-    const checkPassword = await verifyPassword(password,userData.password);
+    const checkPassword = await verifyPassword(password, userData.password);
 
-    if(!checkPassword){
-      return next({msg:"Invalid Credentials",code:401});
+    if (!checkPassword) {
+      return next({ msg: "Invalid Credentials", code: 401 });
     }
 
-    const {password:pass, ...rest} = userData.dataValues;
+    const { password: pass, ...rest } = userData.dataValues;
 
-    const token = await generateToken(userData.dataValues.id,userData.dataValues.email);
+    const token = await generateToken(
+      userData.dataValues.id,
+      userData.dataValues.email
+    );
 
     console.log(token);
-    return res.status(200).cookie('token',token).json({messsage:"Sign In successful",success: true, data:rest});
-
+    return res
+      .status(200)
+      .cookie("token", token)
+      .json({ messsage: "Sign In successful", success: true, data: rest });
   } catch (error) {
     console.log(error);
-    return next({msg:"Failed to sign in user",code:500});
+    return next({ msg: "Failed to sign in user", code: 500 });
   }
 };
 //created using raw mysql query
