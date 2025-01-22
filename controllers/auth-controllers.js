@@ -95,7 +95,7 @@ const SignIn = async (req, res, next) => {
     return res
       .status(200)
       .cookie("token", token)
-      .json({ messsage: "Sign In successful", success: true, data: rest });
+      .json({ message: "Sign In successful", success: true, data: rest });
   } catch (error) {
     console.log(error);
     return next({ msg: "Failed to sign in user", code: 500 });
