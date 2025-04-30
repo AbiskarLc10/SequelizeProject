@@ -53,6 +53,6 @@
     "husky": "^8.0.0"
   },
   "lint-staged":{
-    "*.js":"eslint . --fix"
+    "*.js":"eslint"
   }
 }
