@@ -4,10 +4,11 @@ services:
   mysqldb:
     image: mysql:8.0
     container_name: mysqldb
+    restart: always
+    ports:
+      - "3306"
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=testdb
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
@@ -35,4 +36,5 @@ services:
 
 networks:
   my-net:
-    driver: bridge  
+    external: true
+      
