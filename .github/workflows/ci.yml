@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,27 +22,17 @@ jobs:
           node-version: ${{ matrix.node_version }}
           cache: 'npm'
 
-      - name: Create Docker network
-        run: docker network create my-net
-
       - name: Docker Compose Version
         run: docker compose version
 
-      - name: Set up Docker Compose
+      - name: Start Docker containers
         run: docker compose up --build -d
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
 
       - name: Wait for app to be ready
         run: |
           echo "Waiting for app to be ready..."
           for i in {1..10}; do
-            if curl -s http://localhost:8000 > /dev/null; then
+            if curl -sSf http://localhost:8000 > /dev/null; then
               echo "App is up!"
               exit 0
             fi
@@ -56,4 +46,6 @@ jobs:
       - name: Run tests
         run: npm run test
 
-
+      - name: Cleanup Docker containers
+        if: always()
+        run: docker compose down
