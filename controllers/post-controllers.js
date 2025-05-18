@@ -10,6 +10,7 @@ const createPost = async (req, res, next) => {
       content: content,
       user_id: id,
     });
+    const data = 1;
 
     if (!newPost) {
       return next({ msg: "Failed to create user post", code: 400 });

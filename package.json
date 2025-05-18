@@ -5,10 +5,11 @@
   "type": "commonjs",
   "scripts": {
     "test": "jest",
-    "dev": " nodemon ./index.js",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "prepare": "husky install"
+    "dev": " nodemon ./server.js",
+    "prepare": "husky install",
+    "lint-stage":"lint-staged",
+    "lint:fix":"eslint . --fix",
+    "db:migrate":"npx sequelize-cli db:migrate"
   },
   "keywords": [],
   "author": "",
@@ -41,15 +42,19 @@
     "root": "."
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "^9.25.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "eslint": "^9.18.0",
+    "eslint": "^9.25.1",
+    "globals": "^16.0.0",
     "jest": "^29.7.0",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
     "superagent": "^10.1.1",
-    "supertest": "^7.0.0"
+    "supertest": "^7.0.0",
+    "husky": "^8.0.0"
   },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix"
+  "lint-staged":{
+    "*.js":"eslint . --fix"
   }
 }

@@ -1,0 +1,30 @@
+name: Test Code
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: ["18.x", "20.x", "22.x"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node_version }}
+          cache: 'npm'
+
+      - name: Set up Docker Compose
+        run: docker-compose up --build --abort-on-container-exit
+
+      - name: Show container logs (on failure)
+        if: failure()
+        run: docker-compose logs
