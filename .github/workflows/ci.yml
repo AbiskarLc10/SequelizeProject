@@ -1,0 +1,41 @@
+name: Test Code
+
+on:
+ pull_request:
+    branches: ["main"]
+ push:
+   branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: ["18.x","20.x","22.x"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{matrix.node_version}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{matrix.node_version}}
+          cache: 'npm'
+      - name: Installing Dependencies
+        run: npm install
+      - name: Migrating database
+        run: npm run db:migrate
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: ["18.x","20.x","22.x"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{matrix.node_version}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{matrix.node_version}}
+          cache: 'npm'
+      - name: Installing Dependencies
+        run: npm install
+      - name: Testing application
+        run: npm run test
