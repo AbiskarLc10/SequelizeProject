@@ -28,9 +28,5 @@ jobs:
 
       - name: Set up Docker Compose
         run: docker compose up --build --abort-on-container-exit
-
-      - name: Show container logs (on failure)
-        if: failure()
-        run: docker compose logs
       - name: Run test
         run: npm run test
