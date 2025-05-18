@@ -21,6 +21,8 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
           cache: 'npm'
+      - name: Create docker netword
+        run: docker network create my-net
       - name: Docker Compose Version
         run: docker compose version
 
