@@ -6,8 +6,6 @@ services:
     container_name: mysqldb
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=testdb
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
