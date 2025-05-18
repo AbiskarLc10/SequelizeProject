@@ -21,39 +21,16 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
           cache: 'npm'
-
-      - name: Create Docker network
+      - name: Create docker netword
         run: docker network create my-net
-
-      - name: Check Docker Compose version
+      - name: Docker Compose Version
         run: docker compose version
 
-      - name: Start services with Docker Compose
-        run: docker compose up --build -d
-
-      - name: Wait for app to start
-        run: |
-          echo "Waiting for app to be ready..."
-          for i in {1..10}; do
-            if curl -s http://localhost:3000 > /dev/null; then
-              echo "App is up!"
-              exit 0
-            fi
-            echo "App not ready yet, retrying in 5 seconds..."
-            sleep 5
-          done
-          echo "App failed to start in time"
-          docker compose logs
-          exit 1
-
-      # You can run tests here if needed
-      # - name: Run tests
-      #   run: npm test
+      - name: Set up Docker Compose
+        run: docker compose up --build --abort-on-container-exit
 
       - name: Show container logs (on failure)
         if: failure()
         run: docker compose logs
-
-      - name: Tear down Docker Compose
-        if: always()
-        run: docker compose down
+      - name: Run test
+        run: npm run test
