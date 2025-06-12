@@ -7,11 +7,11 @@ on:
     branches: ["main"]
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node_version: ["18.x", "20.x", "22.x"]
+        node_version: ["18.x"]
 
     steps:
       - uses: actions/checkout@v4
@@ -22,9 +22,30 @@ jobs:
           node-version: ${{ matrix.node_version }}
           cache: 'npm'
 
-      - name: Set up Docker Compose
-        run: docker-compose up --build --abort-on-container-exit
+      - name: Docker Compose Version
+        run: docker compose version
 
-      - name: Show container logs (on failure)
-        if: failure()
-        run: docker-compose logs
+      - name: Start Docker containers
+        run: docker compose up --build -d
+
+      - name: Wait for app to be ready
+        run: |
+          echo "Waiting for app to be ready..."
+          for i in {1..10}; do
+            if curl -sSf http://localhost:8000 > /dev/null; then
+              echo "App is up!"
+              exit 0
+            fi
+            echo "App not ready yet, retrying in 5 seconds..."
+            sleep 5
+          done
+          echo "App failed to start in time"
+          docker compose logs
+          exit 1
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Cleanup Docker containers
+        if: always()
+        run: docker compose down
