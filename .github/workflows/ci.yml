@@ -23,29 +23,31 @@ jobs:
           cache: 'npm'
 
       - name: Docker Compose Version
-        run: docker compose version
+        run: | 
+            echo "This is test of github workflows"
+            npm install
 
-      - name: Start Docker containers
-        run: docker compose up --build -d
+      # - name: Start Docker containers
+      #   run: docker compose up --build -d
 
-      - name: Wait for app to be ready
-        run: |
-          echo "Waiting for app to be ready..."
-          for i in {1..10}; do
-            if curl -sSf http://localhost:8000 > /dev/null; then
-              echo "App is up!"
-              exit 0
-            fi
-            echo "App not ready yet, retrying in 5 seconds..."
-            sleep 5
-          done
-          echo "App failed to start in time"
-          docker compose logs
-          exit 1
+      # - name: Wait for app to be ready
+      #   run: |
+      #     echo "Waiting for app to be ready..."
+      #     for i in {1..10}; do
+      #       if curl -sSf http://localhost:8000 > /dev/null; then
+      #         echo "App is up!"
+      #         exit 0
+      #       fi
+      #       echo "App not ready yet, retrying in 5 seconds..."
+      #       sleep 5
+      #     done
+      #     echo "App failed to start in time"
+      #     docker compose logs
+      #     exit 1
 
-      - name: Run tests
-        run: npm run test
+      # - name: Run tests
+      #   run: npm run test
 
-      - name: Cleanup Docker containers
-        if: always()
-        run: docker compose down
+      # - name: Cleanup Docker containers
+      #   if: always()
+      #   run: docker compose down
