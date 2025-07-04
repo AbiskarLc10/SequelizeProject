@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysqldb
+    restart: always
+    ports:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=testdb
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 20s
+      retries: 10
+    networks:
+      - my-net
+
+  sequelizeapp:
+    build: ./
+    container_name: sequelizeapp
+    environment:
+      - DB_HOST=mysqldb
+      - DB_PORT=3306
+      - DB_NAME=testdb
+      - DB_USER=root
+      - DB_PASSWORD=password
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    networks:
+      - my-net
+
+networks:
+  my-net:
+    external: true
+      

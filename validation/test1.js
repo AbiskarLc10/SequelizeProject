@@ -133,3 +133,83 @@
 
 // console.log(data)
 
+
+
+const testFunction = (count) =>{
+
+    console.log("Hello");
+    console.log("Hiii");
+
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+    if(count===1) console.log("hellooooooooooooooooo");
+
+};
+
+testFunction(1);
