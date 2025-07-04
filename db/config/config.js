@@ -7,7 +7,7 @@
       database: 'newdb',
       host: 'localhost',
       dialect: 'mysql',
-      port: 3306
+      port: 3306,
     },
     test: {
       username: 'root',
@@ -15,11 +15,17 @@
       database: 'newdb',
       host: '127.0.0.1',
       dialect: 'mysql',
-      port: 3306
+      port: 3306,
     },
     production: {
-      use_env_variable:"DATABASE_URL",
-      dialect:"postgres"
+      url: process.env.DATABASE_URL,
+      dialect: 'postgres',
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
     },
   };
 })();
