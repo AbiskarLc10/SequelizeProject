@@ -29,8 +29,4 @@ app.use("/api/transaction", transactionroute);
 
 app.use(errorMiddleware);
 
-app.listen(3000, () => {
-  console.log(`Listening at 3000`);
-});
-
 module.exports = app;
