@@ -1,7 +1,6 @@
 const {
   createMongoAbility,
   AbilityBuilder,
-  Abilities,
   buildMongoQueryMatcher,
 } = require("@casl/ability");
 const { $lte, lte } = require("@ucast/mongo2js");

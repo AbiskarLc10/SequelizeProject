@@ -1,7 +1,5 @@
-const dbConnection = require("../db/conn");
 const bcrypt = require("bcryptjs");
 const { validateEmail } = require("../validation/regex");
-const jwt = require("jsonwebtoken");
 const sequelize = require("../db/sqconn");
 const { User } = require("../db/Models/index");
 const {
@@ -84,7 +82,7 @@ const SignIn = async (req, res, next) => {
       return next({ msg: "Invalid Credentials", code: 401 });
     }
 
-    const { password: pass, ...rest } = userData.dataValues;
+    const { password: _pass, ...rest } = userData.dataValues;
 
     const token = await generateToken(
       userData.dataValues.id,

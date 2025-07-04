@@ -9,10 +9,8 @@ const authroute = require("./route/auth-route");
 const userroute = require("./route/user-route");
 const postroute = require("./route/post-route");
 const transactionroute = require("./route/test-route");
-const sequelize = require("./db/sqconn");
 const morgan = require("morgan");
 const logger = require("./lib/logger");
-const { QueryTypes } = require("sequelize");
 // require("./scheduler/schedule")
 
 const stream = {

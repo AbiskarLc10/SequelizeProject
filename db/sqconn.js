@@ -1,9 +1,9 @@
 const { Sequelize } = require("sequelize");
-const config = require("./config/config");
+const config = require("./config/config.js");
 const logger = require("../lib/logger");
 const environment = process.env.NODE_ENV || "development";
 const configOption = config[environment];
-console.log(configOption)
+console.log(configOption);
 
 const sequelize = new Sequelize(
   configOption.database,

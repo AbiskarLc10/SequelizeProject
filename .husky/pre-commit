@@ -1,3 +1,4 @@
 #!/bin/sh
+export PATH="/c/Program Files/nodejs:$PATH"
 
-npm run lint-stage
+npx lint-staged

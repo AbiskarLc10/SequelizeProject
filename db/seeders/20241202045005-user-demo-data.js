@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up (queryInterface) {
     await queryInterface.bulkInsert("Users", [
       {
         id: 'd0e1f6da-bc11-48c8-92b4-1a9b7b4f07be',  
@@ -57,7 +57,7 @@ module.exports = {
     ]);
   },
 
-  async down (queryInterface, Sequelize) {
+  async down (queryInterface) {
     await queryInterface.bulkDelete("Users", null, {});
   }
 };

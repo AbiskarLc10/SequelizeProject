@@ -6,7 +6,7 @@ router
   .route("/getTransactions")
   .get(
     checkTransactionPermission,
-    async (req, res, next) => {
+    async (req, res, _next) => {
       return res.status(200).json({ message: "Hello guys" });
     }
   );

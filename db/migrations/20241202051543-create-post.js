@@ -46,7 +46,7 @@ module.exports = {
       onUpdate: "CASCADE",
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.removeConstraint("Posts", "FK_Posts_user_id");
     await queryInterface.dropTable("Posts");
   },
