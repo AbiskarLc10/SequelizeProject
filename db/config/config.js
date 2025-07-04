@@ -18,12 +18,8 @@
       port: 3306
     },
     production: {
-      username: process.env.PROD_DB_USER,
-      password: process.env.PROD_DB_PASSWORD,
-      database: process.env.PROD_DB_NAME,
-      host: process.env.PROD_HOST,
-      dialect: process.env.PROD_DIALECT,
-      port: process.env.PROD_PORT
+      use_env_variable:"DATABASE_URL",
+      dialect:"postgres"
     },
   };
 })();
