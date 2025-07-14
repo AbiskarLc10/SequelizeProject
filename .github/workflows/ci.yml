@@ -26,8 +26,13 @@ jobs:
             npm install
 
   cd:
+    needs: [ci]
     runs-on: ubuntu-latest
     steps:
+      - name: Check credentials
+        run: |
+          echo ${{secrets.SERVICE_ID}}
+          echo ${{secrets.API_KEY}}
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
