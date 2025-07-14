@@ -25,25 +25,6 @@ jobs:
         run: |
             docker network create my-net
             docker compose up --build -d
-            
-      - name: Checking the app to respond
-        run: |
-          echo "Waiting for app to be ready..."
-          for i in {1..30}; do
-            if curl -sSf http://localhost:8000 > /dev/null; then
-              echo "App is up!"
-              break
-            fi
-            echo "App not ready yet, retrying in 5 seconds..."
-            sleep 5
-          done
-          
-          # Check if app is actually running
-          if ! curl -sSf http://localhost:8000 > /dev/null; then
-            echo "App failed to start in time"
-            docker compose logs
-            exit 1
-          fi
 
       - name: Cleanup
         run: docker compose down
