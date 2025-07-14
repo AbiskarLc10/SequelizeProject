@@ -1,11 +1,11 @@
-name: CI
+name: CI/CD pipeline
 
 on:
   push:
     branches: ["main"]
 
 jobs:
-  test and build:
+  ci:
       runs-on: ubuntu-latest
       strategy:
         matrix:
