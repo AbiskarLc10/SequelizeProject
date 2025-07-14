@@ -20,6 +20,8 @@ services:
   sequelizeapp:
     build: ./
     container_name: sequelizeapp
+    ports:
+      - "8000:8000"
     environment:
       - DB_HOST=mysqldb
       - DB_PORT=3306
