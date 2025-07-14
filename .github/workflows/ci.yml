@@ -23,7 +23,22 @@ jobs:
       
       - name: Installing dependencies
         run: |
-            npm install
+            docker compose up --build
+
+      - name: Checking the app to respond
+        run: |
+          echo "Waiting for app to be ready..."
+          for i in {1..10}; do
+            if curl -sSf http://localhost:8000 > /dev/null; then
+              echo "App is up!"
+              exit 0
+            fi
+            echo "App not ready yet, retrying in 5 seconds..."
+            sleep 5
+          done
+          echo "App failed to start in time"
+          docker compose logs
+          exit 1
 
   cd:
     needs: [ci]
