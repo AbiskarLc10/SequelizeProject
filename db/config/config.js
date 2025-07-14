@@ -17,6 +17,15 @@
       dialect: 'mysql',
       port: 3306,
     },
+    gitci:{
+      username:"root",
+      password: "password",
+      database: "testdb",
+      host: "mysqldb",
+      dialect: "mysql",
+      port: 3306
+    }
+    ,
     production: {
       url: process.env.DATABASE_URL,
       dialect: 'postgres',
