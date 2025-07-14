@@ -17,5 +17,5 @@ const client = require('../lib/redisclient');
     }
   };
 
-  cron.schedule('* * * * * *', SendMessageInChannel);
+  // cron.schedule('*/20 * * * * *', SendMessageInChannel);
 })();
