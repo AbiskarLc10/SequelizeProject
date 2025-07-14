@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh","-c","npm run db:migrate && node ./index.js"]
+CMD ["sh","-c","npm run db:migrate && nodemon ./server.js"]
