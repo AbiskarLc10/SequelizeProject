@@ -23,6 +23,7 @@ jobs:
       
       - name: Installing dependencies
         run: |
+            docker network create my-net
             docker compose up --build
 
       - name: Checking the app to respond
