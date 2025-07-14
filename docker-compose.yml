@@ -26,6 +26,7 @@ services:
       - DB_NAME=testdb
       - DB_USER=root
       - DB_PASSWORD=password
+      - NODE_ENV=development
     depends_on:
       mysqldb:
         condition: service_healthy
