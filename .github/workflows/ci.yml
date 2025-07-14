@@ -25,12 +25,7 @@ jobs:
         run: |
             docker network create my-net
             docker compose up --build -d
-
-      - name: Installing dependencies and starting services
-        run: |
-          docker network create my-net
-          docker compose up --build -d
-
+            
       - name: Checking the app to respond
         run: |
           echo "Waiting for app to be ready..."
